@@ -1,4 +1,4 @@
-import cors from "cors";
+// import cors from "cors";
 import express from "express";
 const app = express();
 import dotenv from "dotenv";
@@ -16,13 +16,16 @@ import jobsRouter from "./routes/jobsRoutes.js";
 import notFoundMiddleware from "./middleware/not-found.js";
 import errorHandlerMiddleware from "./middleware/error-handler.js";
 
-app.use(cors());
+// app.use(cors());
 app.use(express.json());
 
 console.log("hello");
 
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome!" });
+});
+app.get("/api/v1", (req, res) => {
+  res.json({ msg: "API" });
 });
 
 app.use("/api/v1/auth", authRouter);
