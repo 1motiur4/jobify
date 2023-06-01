@@ -15,7 +15,7 @@ export const registerUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       const resp = axios.post("/api/v1/auth/register", user);
-      console.log("test");
+      console.log("log from registerUser createAsyncThunk");
       console.log(resp);
       // return resp;
     } catch (error) {
@@ -34,7 +34,8 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         // const { user } = action.payload;
-        // console.log(action);
+        // struggling to get data from payload because the promise won't resolve
+        console.log(action);
         state.isLoading = false;
         // state.user = user;
         toast.success(`Hey there`);
