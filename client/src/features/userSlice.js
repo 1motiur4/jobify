@@ -14,10 +14,22 @@ export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (user, thunkAPI) => {
     try {
-      const resp = axios.post("/api/v1/auth/register", user);
+      const resp = await axios.post("/api/v1/auth/register", user);
       console.log("log from registerUser createAsyncThunk");
-      console.log(resp);
-      // return resp;
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const loginUser = createAsyncThunk(
+  "user/loginUser",
+  async (user, thunkAPI) => {
+    try {
+      const resp = await axios.post("api/v1/auth/login", user);
+      console.log("log from loginUser createAsyncThunk");
+      return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
     }
@@ -30,19 +42,26 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(registerUser.pending, (state) => {
-        state.isLoading = false;
+        state.isLoading = true;
       })
       .addCase(registerUser.fulfilled, (state, action) => {
-        // const { user } = action.payload;
-        // struggling to get data from payload because the promise won't resolve
-        console.log(action);
         state.isLoading = false;
-        // state.user = user;
-        toast.success(`Hey there`);
+        const { user } = action.payload;
+        state.user = user;
+        toast.success(`Account for ${user.name} created!`);
       })
       .addCase(registerUser.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { user } = action.payload;
+        state.user = user;
+        toast.success(`Hey there ${user.name}`);
       });
   },
 });

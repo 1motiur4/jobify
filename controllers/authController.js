@@ -27,8 +27,6 @@ const register = async (req, res) => {
     location: user.location,
   });
 
-  // const newUser = new User({ name, email, password });
-
   // try {
   //   await newUser
   //     .save()
