@@ -28,8 +28,15 @@ const register = async (req, res) => {
   });
 };
 
-const login = (req, res) => {
-  res.send("Login user");
+const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  if (!email || !password) {
+    throw new BadRequestError("Please provide all values");
+  }
+
+  const userDoesNotExist = await User.findOne({ email });
+  
 };
 
 const updateUser = (req, res) => {

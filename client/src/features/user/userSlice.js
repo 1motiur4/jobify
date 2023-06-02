@@ -10,6 +10,20 @@ const initialState = {
   jobLocation: "",
 };
 
+export const addUserToLocalStorage = ({ user, token, location }) => {
+  localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("token", token);
+  localStorage.setItem("location", location);
+};
+
+export const removeUserFromLocalStorage = () => {
+  localStorage.removeItem("user");
+  localStorage.removeItem("token");
+  localStorage.removeItem("location");
+};
+
+export const getUserFromLocalStorage = () => {};
+
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (user, thunkAPI) => {
@@ -46,8 +60,9 @@ const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { user } = action.payload;
+        const { user, token, location } = action.payload;
         state.user = user;
+        addUserToLocalStorage({ user, token, location });
         toast.success(`Account for ${user.name} created!`);
       })
       .addCase(registerUser.rejected, (state, action) => {
