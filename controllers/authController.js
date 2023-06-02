@@ -26,26 +26,6 @@ const register = async (req, res) => {
     token,
     location: user.location,
   });
-
-  // try {
-  //   await newUser
-  //     .save()
-  //     .then(() => {
-  //       res.status(StatusCodes.OK).json({
-  //         user: {
-  //           email: newUser.email,
-  //           lastName: newUser.lastName,
-  //           location: newUser.location,
-  //           name: newUser.name,
-  //         },
-  //         token,
-  //         location: newUser.location,
-  //       });
-  //     })
-  //     .catch((err) => console.log(err));
-  // } catch (error) {
-  //   console.log(error);
-  // }
 };
 
 const login = (req, res) => {
