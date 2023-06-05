@@ -2,12 +2,16 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 
+const token = localStorage.getItem("token");
+const user = localStorage.getItem("user");
+const userLocation = localStorage.getItem("");
+
 const initialState = {
   isLoading: false,
-  user: null,
-  token: null,
-  userLocation: "",
-  jobLocation: "",
+  user: user ? JSON.parse(user) : null,
+  token: token,
+  userLocation: userLocation || "",
+  jobLocation: userLocation || "",
 };
 
 export const addUserToLocalStorage = ({ user, token, location }) => {
