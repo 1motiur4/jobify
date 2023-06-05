@@ -3,7 +3,7 @@ import Wrapper from "../assets/wrappers/RegisterPage";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { useSelector, useDispatch } from "react-redux";
-import { registerUser } from "../features/user/userSlice";
+import { loginUser, registerUser } from "../features/user/userSlice";
 import { useNavigate } from "react-router-dom";
 
 const initialState = {
@@ -32,22 +32,23 @@ const Register = () => {
       return;
     }
     if (isMember) {
-      return;
+      dispatch(loginUser({ email, password }));
+    } else {
+      dispatch(registerUser({ name, email, password }));
     }
-    dispatch(registerUser({ name, email, password }));
   };
 
   const toggleMember = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
-  useEffect(() => {
-    if (user) {
-      setTimeout(() => {
-        navigate("/");
-      }, 2000);
-    }
-  }, [user]);
+  // useEffect(() => {
+  //   if (user) {
+  //     setTimeout(() => {
+  //       navigate("/");
+  //     }, 2000);
+  //   }
+  // }, [user]);
 
   return (
     <Wrapper className="full-page">

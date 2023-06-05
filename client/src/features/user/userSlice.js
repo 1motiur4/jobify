@@ -78,8 +78,9 @@ const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
-        const { user } = action.payload;
+        const { user, token, location } = action.payload;
         state.user = user;
+        addUserToLocalStorage({ user, token, location });
         toast.success(`Hey there ${user.name}`);
       });
   },
