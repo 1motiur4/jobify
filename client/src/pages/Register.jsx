@@ -42,13 +42,13 @@ const Register = () => {
     setValues({ ...values, isMember: !values.isMember });
   };
 
-  // useEffect(() => {
-  //   if (user) {
-  //     setTimeout(() => {
-  //       navigate("/");
-  //     }, 2000);
-  //   }
-  // }, [user]);
+  useEffect(() => {
+    if (user) {
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
+    }
+  }, [user]);
 
   return (
     <Wrapper className="full-page">
