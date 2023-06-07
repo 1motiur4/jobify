@@ -4,10 +4,11 @@ import Logo from "./Logo";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../features/user/userSlice";
 
 const Navbar = () => {
   const [showLogout, setShowLogout] = useState(false);
-  const { user } = useSelector((store) => store.user);
+  const { user, isSidebarOpen } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
   return (
@@ -16,7 +17,9 @@ const Navbar = () => {
         <button
           type="button"
           className="toggle-btn"
-          onClick={() => console.log("toggle siebar")}
+          onClick={() => {
+            dispatch(toggleSidebar());
+          }}
         >
           <FaAlignLeft />
         </button>
