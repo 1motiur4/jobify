@@ -8,6 +8,7 @@ const userLocation = localStorage.getItem("");
 
 const initialState = {
   isLoading: false,
+  isSidebarOpen: false,
   user: user ? JSON.parse(user) : null,
   token: token,
   userLocation: userLocation || "",
@@ -61,6 +62,9 @@ const userSlice = createSlice({
     logoutUser: () => {
       removeUserFromLocalStorage();
     },
+    toggleSidebar: (state) => {
+      state.isSidebarOpen = !state.isSidebarOpen;
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -91,5 +95,5 @@ const userSlice = createSlice({
   },
 });
 
-export const { logoutUser } = userSlice.actions;
+export const { logoutUser, toggleSidebar } = userSlice.actions;
 export default userSlice.reducer;
