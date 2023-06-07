@@ -1,16 +1,16 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Landing, Error, Register, ProtectedRoute } from "./pages";
 import {
+  Profile,
   AddJob,
   AllJobs,
-  Profile,
-  SharedLayout,
   Stats,
+  SharedLayout,
 } from "./pages/dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
+const App = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -48,10 +48,6 @@ function App() {
           element={<Register />}
         />
         <Route
-          path="/landing"
-          element={<Landing />}
-        />
-        <Route
           path="*"
           element={<Error />}
         />
@@ -59,6 +55,5 @@ function App() {
       <ToastContainer position="top-center" />
     </BrowserRouter>
   );
-}
-
+};
 export default App;

@@ -85,6 +85,20 @@ const Register = () => {
         >
           Submit
         </button>
+        <button
+          className="btn btn-block"
+          type="button"
+          onClick={() => {
+            dispatch(
+              loginUser({
+                email: "gibberish@gmail.com",
+                password: "gibberish",
+              })
+            );
+          }}
+        >
+          Gibberish
+        </button>
         <p>
           <button
             type="button"
