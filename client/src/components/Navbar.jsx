@@ -28,13 +28,15 @@ const Navbar = () => {
           <button
             type="button"
             className="btn"
-            onClick={() => console.log("show/hide dropdown")}
+            onClick={() => {
+              setShowLogout(!showLogout);
+            }}
           >
             <FaUserCircle />
             john
             <FaCaretDown />
           </button>
-          <div className="dropdown show-dropdown">
+          <div className={`dropdown ${showLogout ? "show-dropdown" : null}`}>
             <button
               type="button"
               className="dropdown-btn"
