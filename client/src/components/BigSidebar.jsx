@@ -1,8 +1,24 @@
 import Wrapper from "../assets/wrappers/BigSidebar";
+import Logo from "./Logo";
+import { useSelector } from "react-redux";
+import NavLinks from "./NavLinks";
 
 const BigSidebar = () => {
-  return <Wrapper>
-    <h1>BigSidebar</h1>
-  </Wrapper>;
+  const { isSidebarOpen } = useSelector((store) => store.user);
+
+  return (
+    <Wrapper>
+      <div
+        className={`sidebar-container ${isSidebarOpen ? "show-sidebar" : null}`}
+      >
+        <div className="content">
+          <header>
+            <Logo />
+          </header>
+          <NavLinks />
+        </div>
+      </div>
+    </Wrapper>
+  );
 };
 export default BigSidebar;
