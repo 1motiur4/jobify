@@ -55,6 +55,20 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+export const updateUser = createAsyncThunk(
+  "user/updateUser",
+  async (user, thunkAPI) => {
+    try {
+      //fix
+      const resp = await axios.patch("api/v1/auth/updateUser");
+      console.log("log from updateUser createAsyncThunk");
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -92,6 +106,16 @@ const userSlice = createSlice({
         state.user = user;
         addUserToLocalStorage({ user, token, location });
         toast.success(`Hey there ${user.name}`);
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { user, token, location } = action.payload;
+        state.user = user;
+        addUserToLocalStorage({ user, token, location });
+        toast.success("Updated user");
       });
   },
 });
