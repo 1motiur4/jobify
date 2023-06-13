@@ -17,9 +17,9 @@ const Proile = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!name || !email || !lastName || !location) {
-      return toast.error("Please fill out all fields!");
-    }
+    // if (!name || !email || !lastName || !location) {
+    //   return toast.error("Please fill out all fields!");
+    // }
 
     dispatch(updateUser({ name, lastName, email, location }));
 

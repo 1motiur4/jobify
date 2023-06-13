@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
+import { config } from "dotenv";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -14,6 +15,36 @@ const initialState = {
   userLocation: userLocation || "",
   jobLocation: userLocation || "",
 };
+
+// axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+const authFetch = axios.create({
+  baseURL: "/api/v1",
+});
+
+//request
+authFetch.interceptors.request.use(
+  (config) => {
+    config.headers["Authorization"] = `Bearer ${token}`;
+    return config;
+  },
+  (error) => {
+    return Promise.reject(error);
+  }
+);
+
+//response
+authFetch.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  (error) => {
+    console.log(error.response);
+    if (error.response.status === 401) {
+      console.log("AUTH ERROR");
+    }
+    return Promise.reject(error);
+  }
+);
 
 export const addUserToLocalStorage = ({ user, token, location }) => {
   localStorage.setItem("user", JSON.stringify(user));
@@ -59,12 +90,7 @@ export const updateUser = createAsyncThunk(
   "user/updateUser",
   async (user, thunkAPI) => {
     try {
-      //fix
-      const resp = await axios.patch("api/v1/auth/updateUser", user, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const resp = await authFetch.patch("/auth/updateUser", user);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -110,6 +136,10 @@ const userSlice = createSlice({
         addUserToLocalStorage({ user, token, location });
         toast.success(`Hey there ${user.name}`);
       })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
       .addCase(updateUser.pending, (state) => {
         state.isLoading = true;
       })
@@ -119,6 +149,10 @@ const userSlice = createSlice({
         state.user = user;
         addUserToLocalStorage({ user, token, location });
         toast.success("Updated user");
+      })
+      .addCase(updateUser.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
       });
   },
 });
