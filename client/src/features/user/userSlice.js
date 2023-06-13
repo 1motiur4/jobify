@@ -60,8 +60,11 @@ export const updateUser = createAsyncThunk(
   async (user, thunkAPI) => {
     try {
       //fix
-      const resp = await axios.patch("api/v1/auth/updateUser");
-      console.log("log from updateUser createAsyncThunk");
+      const resp = await axios.patch("api/v1/auth/updateUser", user, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
