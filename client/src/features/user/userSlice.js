@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { config } from "dotenv";
+import authFetch from "../../../utils/authFetch";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
@@ -15,36 +16,6 @@ const initialState = {
   userLocation: userLocation || "",
   jobLocation: userLocation || "",
 };
-
-// axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-const authFetch = axios.create({
-  baseURL: "/api/v1",
-});
-
-//request
-authFetch.interceptors.request.use(
-  (config) => {
-    config.headers["Authorization"] = `Bearer ${token}`;
-    return config;
-  },
-  (error) => {
-    return Promise.reject(error);
-  }
-);
-
-//response
-authFetch.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  (error) => {
-    console.log(error.response);
-    if (error.response.status === 401) {
-      console.log("AUTH ERROR");
-    }
-    return Promise.reject(error);
-  }
-);
 
 export const addUserToLocalStorage = ({ user, token, location }) => {
   localStorage.setItem("user", JSON.stringify(user));
@@ -102,7 +73,8 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
-    logoutUser: () => {
+    logoutUser: (msg) => {
+      console.log(msg);
       removeUserFromLocalStorage();
       return initialState;
     },
