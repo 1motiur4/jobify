@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import axios from "axios";
-import { config } from "dotenv";
 import authFetch from "../../../utils/authFetch";
 
 const token = localStorage.getItem("token");

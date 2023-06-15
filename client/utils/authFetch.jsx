@@ -1,8 +1,11 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
 import { logoutUser } from "../src/features/user/userSlice";
 
-const token = localStorage.getItem("token");
+let store;
+
+export const injectStore = _store => {
+  store = _store
+}
 
 // axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const authFetch = axios.create({
@@ -12,7 +15,8 @@ const authFetch = axios.create({
 //request
 authFetch.interceptors.request.use(
   (config) => {
-    config.headers["Authorization"] = `Bearer ${token}`;
+    config.headers["Authorization"] = `Bearer ${store.getState().user.token}`;
+    console.log(store.getState().user)
     return config;
   },
   (error) => {
@@ -28,9 +32,8 @@ authFetch.interceptors.response.use(
   (error) => {
     console.log(error.response);
     if (error.response.status === 401) {
-      useDispatch(logoutUser());
+      store.dispatch(logoutUser());
       console.log("AUTH ERROR");
-      // removeUserFromLocalStorage();
     }
     return Promise.reject(error);
   }
