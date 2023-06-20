@@ -5,7 +5,7 @@ import authFetch from "../../../utils/authFetch";
 
 const token = localStorage.getItem("token");
 const user = localStorage.getItem("user");
-const userLocation = localStorage.getItem("");
+const userLocation = localStorage.getItem("location");
 
 const initialState = {
   isLoading: false,
