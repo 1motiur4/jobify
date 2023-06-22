@@ -25,7 +25,7 @@ if (process.env.NODE_ENV !== "production") {
 
 app.use(express.json());
 
-console.log("hello");
+console.log("Server started");
 
 app.get("/", (req, res) => {
   res.send({ msg: "Welcome!" });
