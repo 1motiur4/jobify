@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
-import axios from "axios";
+import authFetch from "../../../utils/authFetch";
 
 const userLocation = localStorage.getItem("location");
 
@@ -17,6 +17,18 @@ const initialState = {
   editJobId: "",
 };
 
+export const createJob = createAsyncThunk(
+  "job/createJob",
+  async (job, thunkAPI) => {
+    try {
+      await authFetch.post("/jobs", job);
+      thunkAPI.dispatch(clearValues());
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 const jobSlice = createSlice({
   name: "job",
   initialState,
@@ -30,6 +42,20 @@ const jobSlice = createSlice({
         jobLocation: userLocation || "",
       };
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(createJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        toast.success("Job created!");
+      })
+      .addCase(createJob.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      });
   },
 });
 

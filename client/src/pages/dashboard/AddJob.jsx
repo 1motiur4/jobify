@@ -3,10 +3,11 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import FormRowSelect from "../../components/FormRowSelect";
-import { handleChange, clearValues } from "../../features/job/jobSlice";
+import { handleChange, clearValues, createJob } from "../../features/job/jobSlice";
 
 const AddJob = () => {
   const {
+    isLoading,
     isEditing,
     position,
     company,
@@ -21,10 +22,11 @@ const AddJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!position || !company || !jobLocation) {
-      toast.error("You're missing something..");
-      return;
-    }
+    // if (!position || !company || !jobLocation) {
+    //   toast.error("You're missing something..");
+    //   return;
+    // }
+    dispatch(createJob({ position, company, jobLocation, jobType, status }));
   };
 
   const handleJobInput = (e) => {
@@ -80,6 +82,7 @@ const AddJob = () => {
             <button
               className="btn btn-block submit-btn"
               type="submit"
+              disabled={isLoading}
             >
               submit
             </button>
