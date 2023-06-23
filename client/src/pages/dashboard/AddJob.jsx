@@ -22,10 +22,10 @@ const AddJob = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    // if (!position || !company || !jobLocation) {
-    //   toast.error("You're missing something..");
-    //   return;
-    // }
+    if (!position || !company || !jobLocation) {
+      toast.error("You're missing something..");
+      return;
+    }
     dispatch(createJob({ position, company, jobLocation, jobType, status }));
   };
 

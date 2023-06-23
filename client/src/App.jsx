@@ -52,7 +52,7 @@ const App = () => {
           element={<Error />}
         />
       </Routes>
-      <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" pauseOnFocusLoss={false}/>
     </BrowserRouter>
   );
 };

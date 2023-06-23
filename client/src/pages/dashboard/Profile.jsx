@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { FormRow } from "../../components";
 import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { updateUser } from "../../features/user/userSlice";
-import { getAllJobs } from "../../features/allJobs/allJobsSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
@@ -14,10 +13,6 @@ const Proile = () => {
   const [email, setEmail] = useState(user?.email);
   const [lastName, setLastName] = useState(user?.lastName);
   const [location, setLocation] = useState(user?.location);
-
-  useEffect(() => {
-    dispatch(getAllJobs());
-  }, []);
 
   const handleSubmit = (e) => {
     e.preventDefault();

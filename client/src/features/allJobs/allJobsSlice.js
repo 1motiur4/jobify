@@ -41,6 +41,10 @@ const allJobsSlice = createSlice({
         state.totalJobs = totalJobs;
         state.numOfPages = numOfPages;
         console.log(state.jobs);
+      })
+      .addCase(getAllJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
       });
   },
 });

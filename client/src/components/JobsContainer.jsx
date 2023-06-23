@@ -15,6 +15,8 @@ const JobsContainer = () => {
     dispatch(getAllJobs());
   }, []);
 
-  return <div>JobsContainer</div>;
+  return <div>
+    <Loading />
+  </div>;
 };
 export default JobsContainer;
