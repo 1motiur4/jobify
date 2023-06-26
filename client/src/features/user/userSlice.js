@@ -75,7 +75,7 @@ const userSlice = createSlice({
     logoutUser: (msg) => {
       console.log(msg);
       removeUserFromLocalStorage();
-      return initialState;
+      return { initialState };
     },
     toggleSidebar: (state) => {
       state.isSidebarOpen = !state.isSidebarOpen;
@@ -104,6 +104,8 @@ const userSlice = createSlice({
         state.isLoading = false;
         const { user, token, location } = action.payload;
         state.user = user;
+        state.token = token;
+        state.userLocation = location;
         addUserToLocalStorage({ user, token, location });
         toast.success(`Hey there ${user.name}`);
       })

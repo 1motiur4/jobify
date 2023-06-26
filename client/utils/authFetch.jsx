@@ -16,7 +16,7 @@ const authFetch = axios.create({
 authFetch.interceptors.request.use(
   (config) => {
     config.headers["Authorization"] = `Bearer ${store.getState().user.token}`;
-    console.log(store.getState().user)
+    // console.log(store.getState().user)
     return config;
   },
   (error) => {

@@ -3,7 +3,13 @@ import Wrapper from "../../assets/wrappers/DashboardFormPage";
 import { useSelector, useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import FormRowSelect from "../../components/FormRowSelect";
-import { handleChange, clearValues, createJob } from "../../features/job/jobSlice";
+import {
+  handleChange,
+  clearValues,
+  createJob,
+  editJob,
+} from "../../features/job/jobSlice";
+import { useNavigate } from "react-router-dom";
 
 const AddJob = () => {
   const {
@@ -16,8 +22,10 @@ const AddJob = () => {
     jobTypeOptions,
     status,
     statusOptions,
+    editJobId,
   } = useSelector((store) => store.job);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -26,7 +34,21 @@ const AddJob = () => {
       toast.error("You're missing something..");
       return;
     }
-    dispatch(createJob({ position, company, jobLocation, jobType, status }));
+
+    if (isEditing) {
+      dispatch(
+        editJob({
+          jobId: editJobId,
+          job: { position, company, jobLocation, jobType, status },
+        })
+      );
+    } else {
+      dispatch(createJob({ position, company, jobLocation, jobType, status }));
+    }
+
+    setTimeout(() => {
+      navigate("/all-jobs");
+    }, 750);
   };
 
   const handleJobInput = (e) => {
