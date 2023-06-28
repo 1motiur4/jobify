@@ -1,5 +1,4 @@
-import { useEffect } from "react";
-import { createSlice, createAsyncThunk, isAllOf } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { toast } from "react-toastify";
 import authFetch from "../../../utils/authFetch";
 
@@ -9,18 +8,34 @@ const initialState = {
   totalJobs: 1,
   numOfPages: 1,
   page: 1,
+  stats: {},
+  monthlyApplications: [],
 };
+
+let url = `/jobs`;
 
 export const getAllJobs = createAsyncThunk(
   "allJobs/getAllJobs",
   async (_, thunkAPI) => {
-    let url = `/jobs`;
     try {
       const resp = await authFetch.get(url);
       console.log(resp.data);
       return resp.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.numOfPages);
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const showStats = createAsyncThunk(
+  "allJobs/showStats",
+  async (_, thunkAPI) => {
+    try {
+      const resp = await authFetch.get(url + "/stats");
+      console.log(resp.data);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
     }
   }
 );
@@ -43,6 +58,18 @@ const allJobsSlice = createSlice({
         console.log(state.jobs);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(showStats.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(showStats.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.stats = action.payload.stats;
+        state.monthlyApplications = action.payload.monthlyApplications;
+      })
+      .addCase(showStats.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
