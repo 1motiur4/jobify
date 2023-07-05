@@ -4,6 +4,7 @@ import Job from "./Job";
 import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import { getAllJobs } from "../features/allJobs/allJobsSlice";
+import PageBtnContainer from "./PageBtnContainer";
 
 const JobsContainer = () => {
   const dispatch = useDispatch();
@@ -12,6 +13,7 @@ const JobsContainer = () => {
     isLoading,
     page,
     totalJobs,
+    numOfPages,
     search,
     searchStatus,
     searchType,
@@ -49,6 +51,7 @@ const JobsContainer = () => {
           );
         })}
       </div>
+      {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
   );
 };
