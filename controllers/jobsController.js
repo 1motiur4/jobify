@@ -18,7 +18,7 @@ const createJob = async (req, res) => {
 };
 
 const getAllJobs = async (req, res) => {
-  const { status, jobType, sort, search } = req.query;
+  const { status, jobType, sort, search, page } = req.query;
 
   const queryObject = {
     createdBy: req.user.userId,
@@ -58,6 +58,11 @@ const getAllJobs = async (req, res) => {
       result = result.sort("-createdAt");
       break;
   }
+
+  const limit = 10;
+  const skip = (page - 1) * limit;
+
+  result = result.skip(skip).limit(limit);
 
   const jobs = await result;
 
