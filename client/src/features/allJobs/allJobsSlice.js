@@ -29,14 +29,13 @@ export const getAllJobs = createAsyncThunk(
     const { page, search, searchStatus, searchType, sort } =
       thunkAPI.getState().allJobs;
 
-    let getAllJobsURL = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}`;
+    let getAllJobsURL = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
     if (search) {
       getAllJobsURL += `&search=${search}`;
     }
 
     try {
       const resp = await authFetch.get(getAllJobsURL);
-      console.log(resp.data);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -49,7 +48,6 @@ export const showStats = createAsyncThunk(
   async (_, thunkAPI) => {
     try {
       const resp = await authFetch.get(url + "/stats");
-      console.log(resp.data);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -67,6 +65,9 @@ const allJobsSlice = createSlice({
     },
     clearFilters: (state) => {
       return { ...state, ...initialFiltersState };
+    },
+    changePage: (state, { payload }) => {
+      state.page = payload;
     },
   },
   extraReducers: (builder) => {
@@ -101,5 +102,5 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { handleChange, clearFilters } = allJobsSlice.actions;
+export const { handleChange, clearFilters, changePage } = allJobsSlice.actions;
 export default allJobsSlice.reducer;
