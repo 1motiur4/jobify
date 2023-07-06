@@ -6,6 +6,7 @@ import {
   AllJobs,
   Stats,
   SharedLayout,
+  MyListings
 } from "./pages/dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -35,6 +36,10 @@ const App = () => {
             element={<AddJob />}
           />
           <Route
+            path="my-listings"
+            element={<MyListings />}
+          />
+          <Route
             path="profile"
             element={<Profile />}
           />
@@ -52,7 +57,10 @@ const App = () => {
           element={<Error />}
         />
       </Routes>
-      <ToastContainer position="top-center" pauseOnFocusLoss={false}/>
+      <ToastContainer
+        position="top-center"
+        pauseOnFocusLoss={false}
+      />
     </BrowserRouter>
   );
 };
