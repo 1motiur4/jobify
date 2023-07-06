@@ -1,5 +1,5 @@
 import { IoBarChartSharp } from "react-icons/io5";
-import { MdQueryStats } from "react-icons/md";
+import { MdQueryStats, MdArticle } from "react-icons/md";
 import { FaWpforms } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 
@@ -24,6 +24,12 @@ const links = [
   },
   {
     id: 4,
+    text: "my listings",
+    path: "my-listings",
+    icon: <ImProfile />,
+  },
+  {
+    id: 5,
     text: "profile",
     path: "profile",
     icon: <ImProfile />,
