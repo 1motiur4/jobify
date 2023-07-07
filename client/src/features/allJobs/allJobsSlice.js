@@ -43,6 +43,26 @@ export const getAllJobs = createAsyncThunk(
   }
 );
 
+export const getMyJobs = createAsyncThunk(
+  "allJobs/getAllJobs",
+  async (_, thunkAPI) => {
+    const { page, search, searchStatus, searchType, sort } =
+      thunkAPI.getState().allJobs;
+
+    let getMyJobsURL = `/jobs/myJobs/?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
+    if (search) {
+      getMyJobsURL += `&search=${search}`;
+    }
+
+    try {
+      const resp = await authFetch.get(getMyJobsURL);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
 export const showStats = createAsyncThunk(
   "allJobs/showStats",
   async (_, thunkAPI) => {
@@ -84,6 +104,21 @@ const allJobsSlice = createSlice({
         console.log(state.jobs);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(getMyJobs.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getMyJobs.fulfilled, (state, action) => {
+        state.isLoading = false;
+        const { jobs, totalJobs, numOfPages } = action.payload;
+        state.jobs = jobs;
+        state.totalJobs = totalJobs;
+        state.numOfPages = numOfPages;
+        console.log(state.jobs);
+      })
+      .addCase(getMyJobs.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       })

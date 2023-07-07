@@ -17,12 +17,16 @@ const createJob = async (req, res) => {
   res.status(StatusCodes.CREATED).json({ job });
 };
 
-const getAllJobs = async (req, res) => {
+const grabJobsRequest = async (req, res, user) => {
   const { status, jobType, sort, search, page } = req.query;
 
-  const queryObject = {
-    createdBy: req.user.userId,
-  };
+  let queryObject = {};
+
+  if (user) {
+    queryObject = {
+      createdBy: req.user.userId,
+    };
+  }
 
   if (status && status !== "all") {
     queryObject.status = status;
@@ -69,7 +73,15 @@ const getAllJobs = async (req, res) => {
   const totalJobs = await Job.countDocuments(queryObject);
   const numOfPages = Math.ceil(totalJobs / limit);
 
-  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages});
+  res.status(StatusCodes.OK).json({ jobs, totalJobs, numOfPages });
+};
+
+const getAllJobs = async (req, res) => {
+  return grabJobsRequest(req, res, false);
+};
+
+const getMyJobs = async (req, res) => {
+  return grabJobsRequest(req, res, true);
 };
 
 const updateJob = async (req, res) => {
@@ -171,4 +183,4 @@ const showStats = async (req, res) => {
   res.status(StatusCodes.OK).json({ stats: defaultStats, monthlyApplications });
 };
 
-export { createJob, deleteJob, getAllJobs, updateJob, showStats };
+export { createJob, deleteJob, getAllJobs, getMyJobs, updateJob, showStats };
