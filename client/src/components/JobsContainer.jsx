@@ -3,10 +3,10 @@ import Loading from "./Loading";
 import Job from "./Job";
 import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
-import { getAllJobs } from "../features/allJobs/allJobsSlice";
 import PageBtnContainer from "./PageBtnContainer";
+import PropTypes from "prop-types";
 
-const JobsContainer = () => {
+const JobsContainer = ({ getJobsFunc }) => {
   const dispatch = useDispatch();
   const {
     jobs,
@@ -21,7 +21,7 @@ const JobsContainer = () => {
   } = useSelector((store) => store.allJobs);
 
   useEffect(() => {
-    dispatch(getAllJobs());
+    dispatch(getJobsFunc());
   }, [search, searchStatus, searchType, sort, page]);
 
   if (isLoading) {
@@ -55,4 +55,9 @@ const JobsContainer = () => {
     </Wrapper>
   );
 };
+
+JobsContainer.propTypes = {
+  getJobsFunc: PropTypes.func,
+};
+
 export default JobsContainer;

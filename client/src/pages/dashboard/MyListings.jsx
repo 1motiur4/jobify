@@ -1,6 +1,12 @@
+import { SearchContainer, JobsContainer } from "../../components"
+import { getMyJobs } from "../../features/allJobs/allJobsSlice"
+
 const MyListings = () => {
   return (
-    <div>MyListings</div>
+    <>
+      <SearchContainer />
+      <JobsContainer getJobsFunc={getMyJobs} />
+    </>
   )
 }
 export default MyListings

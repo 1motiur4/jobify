@@ -44,7 +44,7 @@ export const getAllJobs = createAsyncThunk(
 );
 
 export const getMyJobs = createAsyncThunk(
-  "allJobs/getAllJobs",
+  "allJobs/getMyJobs",
   async (_, thunkAPI) => {
     const { page, search, searchStatus, searchType, sort } =
       thunkAPI.getState().allJobs;
@@ -107,6 +107,18 @@ const allJobsSlice = createSlice({
         state.isLoading = false;
         toast.error(action.payload);
       })
+      .addCase(showStats.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(showStats.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.stats = action.payload.stats;
+        state.monthlyApplications = action.payload.monthlyApplications;
+      })
+      .addCase(showStats.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
       .addCase(getMyJobs.pending, (state) => {
         state.isLoading = true;
       })
@@ -119,18 +131,6 @@ const allJobsSlice = createSlice({
         console.log(state.jobs);
       })
       .addCase(getMyJobs.rejected, (state, action) => {
-        state.isLoading = false;
-        toast.error(action.payload);
-      })
-      .addCase(showStats.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(showStats.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.stats = action.payload.stats;
-        state.monthlyApplications = action.payload.monthlyApplications;
-      })
-      .addCase(showStats.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
