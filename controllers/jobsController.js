@@ -110,7 +110,8 @@ const updateJob = async (req, res) => {
 };
 
 const deleteJob = async (req, res) => {
-  const { id: jobId } = req.params;
+  console.log(req.params);
+  const { jobId } = req.params;
 
   if (!jobId) {
     throw new BadRequestError("Missing job ID");
@@ -183,4 +184,14 @@ const showStats = async (req, res) => {
   res.status(StatusCodes.OK).json({ stats: defaultStats, monthlyApplications });
 };
 
-export { createJob, deleteJob, getAllJobs, getMyJobs, updateJob, showStats };
+const getJobListing = async (req, res) => {
+  const { jobId } = req.params;
+
+  let queryObject = { _id: jobId };
+
+  let result = await Job.find(queryObject);
+
+  res.status(StatusCodes.OK).json({ result });
+};
+
+export { createJob, deleteJob, getAllJobs, getMyJobs, updateJob, showStats, getJobListing };

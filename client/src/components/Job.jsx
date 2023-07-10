@@ -1,7 +1,7 @@
 import { FaLocationArrow, FaBriefcase, FaCalendarAlt } from "react-icons/fa";
 import { Link } from "react-router-dom";
 import Wrapper from "../assets/wrappers/Job";
-import { useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import JobInfo from "./JobInfo";
 import moment from "moment";
 import { deleteJob, setEditJob } from "../features/job/jobSlice";
@@ -13,9 +13,13 @@ const Job = ({
   jobLocation,
   jobType,
   createdAt,
+  createdBy,
   status,
 }) => {
   const dispatch = useDispatch();
+  const { user } = useSelector((store) => store.user);
+
+  const jobOwner = createdBy === user._id;
 
   const date = moment(createdAt).format("MM-DD-YYYY");
 
@@ -44,37 +48,40 @@ const Job = ({
           />
           <div className={`status ${status}`}>{status}</div>
         </div>
-        <footer>
-          <div className="actions">
-            <Link
-              to="/add-job"
-              className="btn edit-btn"
-              onClick={() => {
-                dispatch(
-                  setEditJob({
-                    editJobId: _id,
-                    position,
-                    company,
-                    jobLocation,
-                    jobType,
-                    status,
-                  })
-                );
-              }}
-            >
-              Edit
-            </Link>
-            <button
-              type="button"
-              className="btn delete-btn"
-              onClick={() => {
-                dispatch(deleteJob(_id));
-              }}
-            >
-              Delete
-            </button>
-          </div>
-        </footer>
+
+        {jobOwner && (
+          <footer>
+            <div className="actions">
+              <Link
+                to="/add-job"
+                className="btn edit-btn"
+                onClick={() => {
+                  dispatch(
+                    setEditJob({
+                      editJobId: _id,
+                      position,
+                      company,
+                      jobLocation,
+                      jobType,
+                      status,
+                    })
+                  );
+                }}
+              >
+                Edit
+              </Link>
+              <button
+                type="button"
+                className="btn delete-btn"
+                onClick={() => {
+                  dispatch(deleteJob(_id));
+                }}
+              >
+                Delete
+              </button>
+            </div>
+          </footer>
+        )}
       </div>
     </Wrapper>
   );
