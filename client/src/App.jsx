@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Landing, Error, Register, ProtectedRoute } from "./pages";
+import { Landing, Error, Register, ProtectedRoute, JobPage } from "./pages";
 import {
   Profile,
   AddJob,
   AllJobs,
   Stats,
   SharedLayout,
-  MyListings
+  MyListings,
 } from "./pages/dashboard";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -38,6 +38,10 @@ const App = () => {
           <Route
             path="my-listings"
             element={<MyListings />}
+          />
+          <Route
+            path="all-jobs/:jobId"
+            element={<JobPage />}
           />
           <Route
             path="profile"

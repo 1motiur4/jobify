@@ -28,12 +28,10 @@ export const getAllJobs = createAsyncThunk(
   async (_, thunkAPI) => {
     const { page, search, searchStatus, searchType, sort } =
       thunkAPI.getState().allJobs;
-
     let getAllJobsURL = `/jobs?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
     if (search) {
       getAllJobsURL += `&search=${search}`;
     }
-
     try {
       const resp = await authFetch.get(getAllJobsURL);
       return resp.data;
@@ -48,12 +46,10 @@ export const getMyJobs = createAsyncThunk(
   async (_, thunkAPI) => {
     const { page, search, searchStatus, searchType, sort } =
       thunkAPI.getState().allJobs;
-
     let getMyJobsURL = `/jobs/myJobs/?status=${searchStatus}&jobType=${searchType}&sort=${sort}&page=${page}`;
     if (search) {
       getMyJobsURL += `&search=${search}`;
     }
-
     try {
       const resp = await authFetch.get(getMyJobsURL);
       return resp.data;

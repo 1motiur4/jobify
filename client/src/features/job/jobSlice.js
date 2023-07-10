@@ -16,7 +16,22 @@ const initialState = {
   status: "pending",
   isEditing: false,
   editJobId: "",
+  job: {},
 };
+
+export const getJobListing = createAsyncThunk(
+  "job/getJobListing",
+  async (jobId, thunkAPI) => {
+    try {
+      console.log(jobId);
+      // const resp = await authFetch.get(`/jobs/all-jobs/${jobId}`);
+      // console.log(resp.data);
+      // return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
 
 export const createJob = createAsyncThunk(
   "job/createJob",
@@ -105,6 +120,19 @@ const jobSlice = createSlice({
         toast.success("Deleted the job");
       })
       .addCase(deleteJob.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(getJobListing.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getJobListing.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        // const { job } = action.payload;
+        // state.job = job;
+      })
+      .addCase(getJobListing.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });

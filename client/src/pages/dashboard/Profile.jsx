@@ -5,7 +5,7 @@ import { updateUser } from "../../features/user/userSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const Proile = () => {
+const Profile = () => {
   const { user, isLoading } = useSelector((store) => store.user);
   const dispatch = useDispatch();
 
@@ -71,4 +71,4 @@ const Proile = () => {
     </Wrapper>
   );
 };
-export default Proile;
+export default Profile;
