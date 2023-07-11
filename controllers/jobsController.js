@@ -192,7 +192,7 @@ const getJobListing = async (req, res) => {
   let result = await Job.findOne(queryObject);
   console.log(result);
 
-  res.status(StatusCodes.OK).json({ result });
+  res.status(StatusCodes.OK).json({result});
 };
 
 export { createJob, deleteJob, getAllJobs, getMyJobs, updateJob, showStats, getJobListing };

@@ -7,15 +7,14 @@ import { useParams } from "react-router-dom";
 const JobPage = () => {
   const dispatch = useDispatch();
   const { job } = useSelector((store) => store.job);
-  const { id } = useParams();
-  // console.log(useParams())
+  const { jobId } = useParams();
 
   useEffect(() => {
-    dispatch(getJobListing(id))
+    dispatch(getJobListing(jobId))
   }, [])
 
-  // console.log(job);
+//   console.log(job);
 
-  return <Wrapper>hi</Wrapper>;
+  return <Wrapper>{job._id}</Wrapper>;
 };
 export default JobPage;

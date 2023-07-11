@@ -40,7 +40,7 @@ const App = () => {
             element={<MyListings />}
           />
           <Route
-            path="all-jobs/:jobId"
+            path=":jobId"
             element={<JobPage />}
           />
           <Route

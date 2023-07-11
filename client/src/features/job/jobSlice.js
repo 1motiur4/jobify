@@ -19,20 +19,6 @@ const initialState = {
   job: {},
 };
 
-export const getJobListing = createAsyncThunk(
-  "job/getJobListing",
-  async (jobId, thunkAPI) => {
-    try {
-      console.log(jobId);
-      // const resp = await authFetch.get(`/jobs/all-jobs/${jobId}`);
-      // console.log(resp.data);
-      // return resp.data;
-    } catch (error) {
-      return thunkAPI.rejectWithValue(error.response.data.msg);
-    }
-  }
-);
-
 export const createJob = createAsyncThunk(
   "job/createJob",
   async (job, thunkAPI) => {
@@ -64,6 +50,19 @@ export const editJob = createAsyncThunk(
     try {
       const resp = await authFetch.patch(`/jobs/${jobId}`, job);
       thunkAPI.dispatch(clearValues());
+      return resp.data.data.result;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const getJobListing = createAsyncThunk(
+  "job/getJobListing",
+  async (jobId, thunkAPI) => {
+    try {
+      const resp = await authFetch.get(`/jobs/${jobId}`);
+      console.log(resp);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -129,8 +128,8 @@ const jobSlice = createSlice({
       .addCase(getJobListing.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
-        // const { job } = action.payload;
-        // state.job = job;
+        const { result } = action.payload;
+        state.job = result;
       })
       .addCase(getJobListing.rejected, (state, action) => {
         state.isLoading = false;
