@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Loading from "./Loading";
 import Job from "./Job";
 import Wrapper from "../assets/wrappers/JobsContainer";
@@ -7,6 +7,8 @@ import PageBtnContainer from "./PageBtnContainer";
 import PropTypes from "prop-types";
 
 const JobsContainer = ({ getJobsFunc }) => {
+  const [showListing, setShowListing] = useState(true);
+
   const dispatch = useDispatch();
   const {
     jobs,
@@ -41,15 +43,18 @@ const JobsContainer = ({ getJobsFunc }) => {
       <h5>
         {totalJobs} job{jobs.length > 1 && "s"}
       </h5>
-      <div className="jobs">
-        {jobs.map((job) => {
-          return (
-            <Job
-              key={job._id}
-              {...job}
-            />
-          );
-        })}
+      <div className={`jobs-container ${showListing ? "show-listing" : null}`}>
+        <div className="jobs">
+          {jobs.map((job) => {
+            return (
+              <Job
+                key={job._id}
+                {...job}
+              />
+            );
+          })}
+        </div>
+        <div>test</div>
       </div>
       {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>

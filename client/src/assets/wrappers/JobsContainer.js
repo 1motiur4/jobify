@@ -19,6 +19,13 @@ const Wrapper = styled.section`
       grid-template-columns: 1fr 1fr;
       gap: 1rem;
     }
+    .jobs-container {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+    .show-listing {
+      grid-template-columns: 1fr 1fr;
+    }
   }
 `
 export default Wrapper
