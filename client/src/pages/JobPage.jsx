@@ -13,8 +13,6 @@ const JobPage = () => {
     dispatch(getJobListing(jobId))
   }, [])
 
-//   console.log(job);
-
   return <Wrapper>{job._id}</Wrapper>;
 };
 export default JobPage;

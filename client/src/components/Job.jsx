@@ -28,7 +28,7 @@ const Job = ({
       <header>
         <div className="main-icon">{company.charAt(0)}</div>
         <div className="info">
-          <h5>{position}</h5>
+          <h5><Link to={`../${_id}`}>{position}</Link></h5>
           <p>{company}</p>
         </div>
       </header>
