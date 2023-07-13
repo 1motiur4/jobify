@@ -19,7 +19,6 @@ const initialState = {
   stats: {},
   monthlyApplications: [],
   currentListing: "64ae0a582f9490842c313d9c",
-  listing: true,
   ...initialFiltersState,
 };
 
@@ -86,9 +85,6 @@ const allJobsSlice = createSlice({
     },
     changePage: (state, { payload }) => {
       state.page = payload;
-    },
-    toggleListing: (state) => {
-      state.listing = !state.listing;
     },
   },
   extraReducers: (builder) => {

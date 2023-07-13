@@ -128,8 +128,8 @@ const jobSlice = createSlice({
       .addCase(getJobListing.fulfilled, (state, action) => {
         state.isLoading = false;
         console.log(action.payload);
-        const { result } = action.payload;
-        state.job = result;
+        const { job } = action.payload;
+        state.job = job;
       })
       .addCase(getJobListing.rejected, (state, action) => {
         state.isLoading = false;
