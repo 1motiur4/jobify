@@ -1,6 +1,7 @@
-import styled from 'styled-components'
+import styled from "styled-components";
 
 const Wrapper = styled.section`
+  margin-right: 30px;
   margin-top: 4rem;
   h2 {
     text-transform: none;
@@ -27,5 +28,5 @@ const Wrapper = styled.section`
       grid-template-columns: 1fr 1fr;
     }
   }
-`
-export default Wrapper
+`;
+export default Wrapper;

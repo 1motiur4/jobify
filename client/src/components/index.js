@@ -13,6 +13,7 @@ import Job from "./Job";
 import JobInfo from "./JobInfo";
 import Loading from "./Loading";
 import NavLinks from "./NavLinks";
+import JobListing from "./JobListing";
 
 export {
   Logo,
@@ -30,4 +31,5 @@ export {
   JobInfo,
   Loading,
   NavLinks,
+  JobListing,
 };
