@@ -5,11 +5,8 @@ import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import PageBtnContainer from "./PageBtnContainer";
 import PropTypes from "prop-types";
-import { toggleListing } from "../features/allJobs/allJobsSlice";
 
 const JobsContainer = ({ getJobsFunc }) => {
-  const [showListing, setShowListing] = useState(true);
-
   const dispatch = useDispatch();
   const {
     jobs,
@@ -22,11 +19,11 @@ const JobsContainer = ({ getJobsFunc }) => {
     searchType,
     sort,
     currentListing,
-    listing,
   } = useSelector((store) => store.allJobs);
 
   useEffect(() => {
     dispatch(getJobsFunc());
+    
   }, [search, searchStatus, searchType, sort, page]);
 
   if (isLoading) {
@@ -41,20 +38,23 @@ const JobsContainer = ({ getJobsFunc }) => {
     );
   }
 
+  const test = {"_id": "649a51c40b7500b88b49f6ac",
+  "company": "Stamm-Shanahan",
+  "position": "Assistant Manager",
+  "status": "interview",
+  "jobType": "remote",
+  "jobLocation": "Cartagena",
+  "createdBy": "647e0caee2f0a7c0cd9c4cf6",
+  "createdAt": "2023-03-22T20:39:55.000Z",
+  "updatedAt": "2023-03-22T20:39:55.000Z",
+  "__v": 0}
+
   return (
     <Wrapper>
       <h5>
         {totalJobs} job{jobs.length > 1 && "s"} <span />
-        <button
-          className="btn"
-          onClick={() => {
-            dispatch(toggleListing());
-          }}
-        >
-          Toggle Listing
-        </button>
       </h5>
-      <div className={`jobs-container ${listing ? "show-listing" : null}`}>
+      <div className="jobs-container">
         <div className="jobs">
           {jobs.map((job) => {
             return (
@@ -65,7 +65,7 @@ const JobsContainer = ({ getJobsFunc }) => {
             );
           })}
         </div>
-        {listing ? <JobListing /> : null}
+        <JobListing job={test}/>
       </div>
       {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>
