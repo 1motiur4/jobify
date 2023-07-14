@@ -14,7 +14,9 @@ const JobListing = ({ job }) => {
 
   return (
     <Wrapper>
-      <h3>{position}</h3>
+      <div className="job-listing-container">
+        <h3>{position}</h3>
+      </div>
     </Wrapper>
   );
 };
