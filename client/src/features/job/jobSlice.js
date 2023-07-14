@@ -36,7 +36,6 @@ export const deleteJob = createAsyncThunk(
   async (jobId, thunkAPI) => {
     try {
       const resp = await authFetch.delete(`/jobs/${jobId}`);
-      console.log(resp.data);
       thunkAPI.dispatch(getAllJobs());
     } catch (error) {
       thunkAPI.rejectWithValue(error.response.data.msg);
@@ -62,7 +61,7 @@ export const getJobListing = createAsyncThunk(
   async (jobId, thunkAPI) => {
     try {
       const resp = await authFetch.get(`/jobs/${jobId}`);
-      console.log(resp);
+      console.log("get job listing async: " + resp);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);

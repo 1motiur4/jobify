@@ -5,6 +5,7 @@ import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import PageBtnContainer from "./PageBtnContainer";
 import PropTypes from "prop-types";
+import { getSingleJob } from "../features/allJobs/allJobsSlice";
 
 const JobsContainer = ({ getJobsFunc }) => {
   const dispatch = useDispatch();
@@ -19,11 +20,13 @@ const JobsContainer = ({ getJobsFunc }) => {
     searchType,
     sort,
     currentListing,
+    jobInView,
   } = useSelector((store) => store.allJobs);
 
   useEffect(() => {
     dispatch(getJobsFunc());
-    
+    console.log(jobs[0]);
+    dispatch(getSingleJob(jobs[0]));
   }, [search, searchStatus, searchType, sort, page]);
 
   if (isLoading) {
@@ -37,17 +40,6 @@ const JobsContainer = ({ getJobsFunc }) => {
       </Wrapper>
     );
   }
-
-  const test = {"_id": "649a51c40b7500b88b49f6ac",
-  "company": "Stamm-Shanahan",
-  "position": "Assistant Manager",
-  "status": "interview",
-  "jobType": "remote",
-  "jobLocation": "Cartagena",
-  "createdBy": "647e0caee2f0a7c0cd9c4cf6",
-  "createdAt": "2023-03-22T20:39:55.000Z",
-  "updatedAt": "2023-03-22T20:39:55.000Z",
-  "__v": 0}
 
   return (
     <Wrapper>
@@ -65,7 +57,7 @@ const JobsContainer = ({ getJobsFunc }) => {
             );
           })}
         </div>
-        <JobListing job={test}/>
+        <JobListing job={jobInView} />
       </div>
       {numOfPages > 1 && <PageBtnContainer />}
     </Wrapper>

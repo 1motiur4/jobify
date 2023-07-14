@@ -18,7 +18,8 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
-  currentListing: "64ae0a582f9490842c313d9c",
+  currentListing: 0,
+  jobInView: {},
   ...initialFiltersState,
 };
 
@@ -53,6 +54,19 @@ export const getMyJobs = createAsyncThunk(
     }
     try {
       const resp = await authFetch.get(getMyJobsURL);
+      return resp.data;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(error.response.data.msg);
+    }
+  }
+);
+
+export const getSingleJob = createAsyncThunk(
+  "allJobs/getSingleJob",
+  async (jobId, thunkAPI) => {
+    try {
+      const resp = await authFetch.get(`/jobs/${jobId}`);
+      console.log(resp);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -98,6 +112,7 @@ const allJobsSlice = createSlice({
         state.jobs = jobs;
         state.totalJobs = totalJobs;
         state.numOfPages = numOfPages;
+        state.currentListing = jobs[0]._id;
         console.log(state.jobs);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
@@ -128,6 +143,19 @@ const allJobsSlice = createSlice({
         console.log(state.jobs);
       })
       .addCase(getMyJobs.rejected, (state, action) => {
+        state.isLoading = false;
+        toast.error(action.payload);
+      })
+      .addCase(getSingleJob.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(getSingleJob.fulfilled, (state, action) => {
+        state.isLoading = false;
+        console.log(action.payload);
+        const { job } = action.payload;
+        state.jobInView = job;
+      })
+      .addCase(getSingleJob.rejected, (state, action) => {
         state.isLoading = false;
         toast.error(action.payload);
       });
