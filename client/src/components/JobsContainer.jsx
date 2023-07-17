@@ -19,15 +19,21 @@ const JobsContainer = ({ getJobsFunc }) => {
     searchStatus,
     searchType,
     sort,
-    currentListing,
     jobInView,
   } = useSelector((store) => store.allJobs);
 
   useEffect(() => {
     dispatch(getJobsFunc());
-    console.log(jobs[0]);
-    dispatch(getSingleJob(jobs[0]));
+    // console.log(jobs);
+    // dispatch(getSingleJob(jobs[0]));
   }, [search, searchStatus, searchType, sort, page]);
+
+  useEffect(() => {
+    console.log(jobs);
+    if (jobs[0]) {
+      dispatch(getSingleJob(jobs[0]._id));
+    }
+  }, [jobs]);
 
   if (isLoading) {
     return <Loading />;

@@ -18,7 +18,6 @@ const initialState = {
   page: 1,
   stats: {},
   monthlyApplications: [],
-  currentListing: 0,
   jobInView: {},
   ...initialFiltersState,
 };
@@ -66,7 +65,7 @@ export const getSingleJob = createAsyncThunk(
   async (jobId, thunkAPI) => {
     try {
       const resp = await authFetch.get(`/jobs/${jobId}`);
-      console.log(resp);
+      console.log(resp.data);
       return resp.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(error.response.data.msg);
@@ -112,8 +111,8 @@ const allJobsSlice = createSlice({
         state.jobs = jobs;
         state.totalJobs = totalJobs;
         state.numOfPages = numOfPages;
-        state.currentListing = jobs[0]._id;
-        console.log(state.jobs);
+        // console.log(jobs[0]);
+        getSingleJob(jobs[0]._id);
       })
       .addCase(getAllJobs.rejected, (state, action) => {
         state.isLoading = false;
@@ -162,6 +161,5 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { handleChange, clearFilters, changePage, toggleListing } =
-  allJobsSlice.actions;
+export const { handleChange, clearFilters, changePage } = allJobsSlice.actions;
 export default allJobsSlice.reducer;
