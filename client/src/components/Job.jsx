@@ -5,8 +5,12 @@ import { useSelector, useDispatch } from "react-redux";
 import JobInfo from "./JobInfo";
 import moment from "moment";
 import { deleteJob, setEditJob } from "../features/job/jobSlice";
+import { changeCurrentListing } from "../features/allJobs/allJobsSlice";
+
+// This component is for each individual job result that shows up within the JobContainer.
 
 const Job = ({
+  index,
   _id,
   position,
   company,
@@ -24,11 +28,17 @@ const Job = ({
   const date = moment(createdAt).format("MM-DD-YYYY");
 
   return (
-    <Wrapper>
+    <Wrapper
+      onClick={() => {
+        dispatch(changeCurrentListing(index));
+      }}
+    >
       <header>
         <div className="main-icon">{company.charAt(0)}</div>
         <div className="info">
-          <h5><Link to={`../${_id}`}>{position}</Link></h5>
+          <h5>
+            <Link to={`../${_id}`}>{position}</Link>
+          </h5>
           <p>{company}</p>
         </div>
       </header>

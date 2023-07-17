@@ -7,6 +7,8 @@ import PageBtnContainer from "./PageBtnContainer";
 import PropTypes from "prop-types";
 import { getSingleJob } from "../features/allJobs/allJobsSlice";
 
+// This component contains the Job component (left) and JobListing component (right).
+
 const JobsContainer = ({ getJobsFunc }) => {
   const dispatch = useDispatch();
   const {
@@ -20,12 +22,11 @@ const JobsContainer = ({ getJobsFunc }) => {
     searchType,
     sort,
     jobInView,
+    currentListing,
   } = useSelector((store) => store.allJobs);
 
   useEffect(() => {
     dispatch(getJobsFunc());
-    // console.log(jobs);
-    // dispatch(getSingleJob(jobs[0]));
   }, [search, searchStatus, searchType, sort, page]);
 
   useEffect(() => {
@@ -34,6 +35,10 @@ const JobsContainer = ({ getJobsFunc }) => {
       dispatch(getSingleJob(jobs[0]._id));
     }
   }, [jobs]);
+
+  useEffect(() => {
+    dispatch(getSingleJob(jobs[currentListing]._id));
+  }, [currentListing]);
 
   if (isLoading) {
     return <Loading />;
@@ -54,9 +59,10 @@ const JobsContainer = ({ getJobsFunc }) => {
       </h5>
       <div className="jobs-container">
         <div className="jobs">
-          {jobs.map((job) => {
+          {jobs.map((job, index) => {
             return (
               <Job
+                index={index}
                 key={job._id}
                 {...job}
               />

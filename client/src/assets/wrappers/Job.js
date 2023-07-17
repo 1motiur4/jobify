@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 const Wrapper = styled.article`
+  cursor: pointer;
   background: var(--white);
   border-radius: var(--borderRadius);
   display: grid;
