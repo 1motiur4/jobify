@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import JobInfo from "./JobInfo";
 import moment from "moment";
 import { deleteJob, setEditJob } from "../features/job/jobSlice";
-import { changeCurrentListing } from "../features/allJobs/allJobsSlice";
+import { getSingleJob } from "../features/allJobs/allJobsSlice";
 
 // This component is for each individual job result that shows up within the JobContainer.
 
@@ -30,7 +30,7 @@ const Job = ({
   return (
     <Wrapper
       onClick={() => {
-        dispatch(changeCurrentListing(index));
+        dispatch(getSingleJob(_id));
       }}
     >
       <header>

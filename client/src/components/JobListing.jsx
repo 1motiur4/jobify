@@ -1,10 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useEffect } from "react";
 import Wrapper from "../assets/wrappers/JobListing";
-import {
-  changeCurrentListing,
-  getSingleJob,
-} from "../features/allJobs/allJobsSlice";
+import { getSingleJob } from "../features/allJobs/allJobsSlice";
 
 const JobListing = ({ job }) => {
   const {
@@ -16,13 +13,6 @@ const JobListing = ({ job }) => {
     createdAt,
     updatedAt,
   } = job;
-
-  const dispatch = useDispatch();
-  const { jobs, currentListing } = useSelector((store) => store.allJobs);
-
-  // useEffect(() => {
-  //   dispatch(getSingleJob(jobs[currentListing]._id));
-  // }, [currentListing]);
 
   return (
     <Wrapper>

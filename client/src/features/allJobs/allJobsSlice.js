@@ -19,7 +19,6 @@ const initialState = {
   stats: {},
   monthlyApplications: [],
   jobInView: {},
-  currentListing: 0,
   ...initialFiltersState,
 };
 
@@ -99,9 +98,6 @@ const allJobsSlice = createSlice({
     changePage: (state, { payload }) => {
       state.page = payload;
     },
-    changeCurrentListing: (state, { payload }) => {
-      state.currentListing = payload;
-    },
   },
   extraReducers: (builder) => {
     builder
@@ -161,6 +157,5 @@ const allJobsSlice = createSlice({
   },
 });
 
-export const { handleChange, clearFilters, changePage, changeCurrentListing } =
-  allJobsSlice.actions;
+export const { handleChange, clearFilters, changePage } = allJobsSlice.actions;
 export default allJobsSlice.reducer;
