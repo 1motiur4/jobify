@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Loading from "./Loading";
-import { Job, JobListing } from "./";
+import { Job, JobList, JobListing } from "./";
 import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import PageBtnContainer from "./PageBtnContainer";
@@ -27,6 +27,10 @@ const JobsContainer = ({ getJobsFunc }) => {
     dispatch(getJobsFunc());
   }, [search, searchStatus, searchType, sort, page]);
 
+  useEffect(() => {
+    console.log("dependency changed");
+  }, [searchStatus]);
+
   if (isLoading) {
     return <Loading />;
   }
@@ -45,17 +49,7 @@ const JobsContainer = ({ getJobsFunc }) => {
         {totalJobs} job{jobs.length > 1 && "s"} <span />
       </h5>
       <div className="jobs-container">
-        <div className="jobs">
-          {jobs.map((job, index) => {
-            return (
-              <Job
-                index={index}
-                key={job._id}
-                {...job}
-              />
-            );
-          })}
-        </div>
+        <JobList jobs={jobs} />
         <JobListing job={jobInView} />
       </div>
       {numOfPages > 1 && <PageBtnContainer />}

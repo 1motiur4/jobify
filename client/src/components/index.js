@@ -14,6 +14,7 @@ import JobInfo from "./JobInfo";
 import Loading from "./Loading";
 import NavLinks from "./NavLinks";
 import JobListing from "./JobListing";
+import JobList from "./JobList";
 
 export {
   Logo,
@@ -32,4 +33,5 @@ export {
   Loading,
   NavLinks,
   JobListing,
+  JobList,
 };
