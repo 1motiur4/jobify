@@ -27,10 +27,6 @@ const JobsContainer = ({ getJobsFunc }) => {
     dispatch(getJobsFunc());
   }, [search, searchStatus, searchType, sort, page]);
 
-  useEffect(() => {
-    console.log("dependency changed");
-  }, [searchStatus]);
-
   if (isLoading) {
     return <Loading />;
   }

@@ -143,7 +143,7 @@ const allJobsSlice = createSlice({
         toast.error(action.payload);
       })
       .addCase(getSingleJob.pending, (state) => {
-        state.isLoading = true;
+        // state.isLoading = true;
       })
       .addCase(getSingleJob.fulfilled, (state, action) => {
         state.isLoading = false;
