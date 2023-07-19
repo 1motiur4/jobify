@@ -5,6 +5,7 @@ import Wrapper from "../assets/wrappers/JobsContainer";
 import { useSelector, useDispatch } from "react-redux";
 import PageBtnContainer from "./PageBtnContainer";
 import PropTypes from "prop-types";
+import { getSingleJob } from "../features/allJobs/allJobsSlice";
 
 // This component contains the Job component (left) and JobListing component (right).
 
@@ -26,6 +27,12 @@ const JobsContainer = ({ getJobsFunc }) => {
   useEffect(() => {
     dispatch(getJobsFunc());
   }, [search, searchStatus, searchType, sort, page]);
+
+  useEffect(() => {
+    if (jobs.length > 0) {
+      dispatch(getSingleJob(jobs[0]._id));
+    }
+  }, [jobs]);
 
   if (isLoading) {
     return <Loading />;
