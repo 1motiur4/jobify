@@ -8,6 +8,10 @@ const Wrapper = styled.article`
   grid-template-rows: 1fr auto;
   box-shadow: var(--shadow-2);
 
+  .active {
+    background-color: #DEF3F7;
+  }
+
   header {
     padding: 1rem 1.5rem;
     border-bottom: 1px solid var(--grey-100);
